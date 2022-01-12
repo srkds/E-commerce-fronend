@@ -17,3 +17,13 @@ const MyRoutes = () => {
 };
 
 export default MyRoutes;
+
+/* 
+NOTE:
+- not everything and every route we are creating is exposed to every single person who is signing into our application
+- some routes are just restricted to administrative use
+- some routes are restricted to only signedin users
+- It is good idea to show some component to some people and some component to some other people
+- so this is route level restriction or restricted routes
+- using react-router-dom
+*/

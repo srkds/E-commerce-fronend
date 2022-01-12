@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { isAuthenticated, signout } from "../auth/helper";
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
@@ -63,15 +64,21 @@ const Menu = ({ history }) => {
             Signin
           </Link>
         </li>
-        <li className="nav-item">
-          <Link
-            style={currentTab(history, "/signout")}
-            className="nav-link"
-            to="/"
-          >
-            Signout
-          </Link>
-        </li>
+        {isAuthenticated() && (
+          <li className="nav-item">
+            <span
+              className="nav-link text-warning"
+              onClick={() => {
+                signout(() => {
+                  // this is callback we are getting from middleware using next
+                  history.push("/"); //move to home
+                });
+              }}
+            >
+              Signout
+            </span>
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -50,6 +50,8 @@ export const authenticate = (data, next) => {
 };
 
 /* SIGNOUT */
+// we are using next here because it allows us to handle callback
+// just after executing this method we can call our callback method
 export const signout = (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
