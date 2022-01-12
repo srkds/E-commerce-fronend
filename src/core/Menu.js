@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { isAuthenticated, signout } from "../auth/helper";
 
@@ -46,24 +46,30 @@ const Menu = ({ history }) => {
             Admin Dashboard
           </Link>
         </li>
-        <li className="nav-item">
-          <Link
-            style={currentTab(history, "/signup")}
-            className="nav-link"
-            to="/signup"
-          >
-            Signup
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            style={currentTab(history, "/signin")}
-            className="nav-link"
-            to="/signin"
-          >
-            Signin
-          </Link>
-        </li>
+        {/* CONDITIONAL RENDERING: show signup signin menu if not loggedin */}
+        {!isAuthenticated() && (
+          <Fragment>
+            <li className="nav-item">
+              <Link
+                style={currentTab(history, "/signup")}
+                className="nav-link"
+                to="/signup"
+              >
+                Signup
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                style={currentTab(history, "/signin")}
+                className="nav-link"
+                to="/signin"
+              >
+                Signin
+              </Link>
+            </li>
+          </Fragment>
+        )}
+        {/* Otherwise show signout menu */}
         {isAuthenticated() && (
           <li className="nav-item">
             <span
