@@ -44,10 +44,10 @@ const Signin = () => {
     if (didRedirect) {
       if (user && user.role === 1) {
         // if loggedin user is admin then redirect to admin
-        return <p>redirect to admin</p>;
+        return <Redirect to="/admin/dashboard" />;
       } else {
         // otherwise redirect to user dashboard
-        return <p>redirect to user dashboard</p>;
+        return <Redirect to="/user/dashboard" />;
       }
     }
     if (isAuthenticated()) {
