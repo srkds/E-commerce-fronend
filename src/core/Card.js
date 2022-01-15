@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { addItemToCart } from "./helper/cartHelper";
 import ImageHelper from "./helper/imageHelper";
 
 const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
   // addtocart = true and removefromcart = false for conditional rendering
   // in home page add tocart and in cart show removefromcart button
 
+  const [redirect, setRedirect] = useState(false);
+
   const cardTitle = product ? product.name : "A photo from pexels";
   const cardDescription = product ? product.description : "default description";
   const cardPrice = product ? product.price : "default";
+
+  const addtoaCart = () => {
+    addItemToCart(product, () => setRedirect(true));
+  };
+
+  const getRedirect = (redirect) => {
+    if (redirect) {
+      return <Redirect to="/cart" />;
+    }
+  };
 
   const showAddToCart = (addtoCart) => {
     return (
       addtoCart && (
         <button
-          onClick={() => {}}
+          onClick={addtoaCart}
           className="btn btn-block btn-outline-success mt-2 mb-2"
         >
           Add to Cart
@@ -39,6 +53,7 @@ const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
     <div className="card text-white bg-dark border border-info ">
       <div className="card-header lead">{cardTitle}</div>
       <div className="card-body">
+        {getRedirect(redirect)}
         <ImageHelper product={product} />
         <p className="lead bg-success font-weight-normal text-wrap">
           {cardDescription}
