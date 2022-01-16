@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { addItemToCart } from "./helper/cartHelper";
+import { addItemToCart, removeItemFromCart } from "./helper/cartHelper";
 import ImageHelper from "./helper/imageHelper";
 
-const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
+const Card = ({
+  product,
+  addtoCart = true,
+  removeFromCart = false,
+  setReload = (f) => f, //returns what is passed
+  reload = undefined,
+}) => {
   // addtocart = true and removefromcart = false for conditional rendering
   // in home page add tocart and in cart show removefromcart button
 
@@ -40,7 +46,10 @@ const Card = ({ product, addtoCart = true, removeFromCart = false }) => {
     return (
       removeFromCart && (
         <button
-          onClick={() => {}}
+          onClick={() => {
+            removeItemFromCart(product._id);
+            setReload(!reload);
+          }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"
         >
           Remove from cart
