@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/helper";
 import { cartEmpty, loadCart } from "./helper/cartHelper";
+import StripeCheckoutButton from "react-stripe-checkout";
 
 // this component receives products, setReload method, and reload
 const StripeCheckout = ({
@@ -29,12 +30,23 @@ const StripeCheckout = ({
     return amount;
   };
 
+  const makePayment = (token) => {};
+
   // conditional rendering of Pay with strip button and signin
   //
   const showStripeButton = () => {
     return isAuthenticated() ? (
       // show if signin
-      <button className="btn btn-success">Pay with stripe</button>
+      <StripeCheckoutButton
+        stripeKey=""
+        token={makePayment}
+        amount={getFinalAmount() * 100}
+        name="Buy t-shirts "
+        shippingAddress
+        billingAddress
+      >
+        <button className="btn btn-success">Pay with stripe</button>
+      </StripeCheckoutButton>
     ) : (
       // show if not signedin
       <Link to="/signin">
