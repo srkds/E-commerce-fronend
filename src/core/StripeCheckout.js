@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/helper";
 import { cartEmpty, loadCart } from "./helper/cartHelper";
 import StripeCheckoutButton from "react-stripe-checkout";
+import { API } from "../backend";
+import { createOrder } from "./helper/orderHelper";
 
 // this component receives products, setReload method, and reload
 const StripeCheckout = ({
@@ -30,7 +32,29 @@ const StripeCheckout = ({
     return amount;
   };
 
-  const makePayment = (token) => {};
+  const makePayment = (token) => {
+    const body = {
+      token,
+      products,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    return fetch(`${API}/stripepayment`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        console.log(response);
+        const { status } = response;
+        console.log("STATUS: ", status);
+        // cartEmpty();
+      })
+      .catch((err) => console.log(err));
+  };
 
   // conditional rendering of Pay with strip button and signin
   //
@@ -38,12 +62,12 @@ const StripeCheckout = ({
     return isAuthenticated() ? (
       // show if signin
       <StripeCheckoutButton
-        stripeKey=""
+        stripeKey="pk_test_51KIuCOSJ3giIz90xawRu1uaKXxJK3tOfoMBQLKxGXJbUEKLmjYjPwD26NJumcWSdLSZgNhdDg1B4tU24HoIvzRcK00seaepSHD"
         token={makePayment}
         amount={getFinalAmount() * 100}
-        name="Buy t-shirts "
-        shippingAddress
-        billingAddress
+        name="Buy t-shirts"
+        // shippingAddress
+        // billingAddress
       >
         <button className="btn btn-success">Pay with stripe</button>
       </StripeCheckoutButton>
