@@ -22,4 +22,4 @@ Backend [E-commerce Backend API](https://github.com/srkds/E-commerce-backend-API
 - stripe
 - mongodb
 
-![MERN Bootcamp](https://s3-ap-southeast-1.amazonaws.com/learnyst/schools/2410/certificates/50332/858012_50332.png?1642497325)
+![MERN Bootcamp](./ss/certificate.png)
